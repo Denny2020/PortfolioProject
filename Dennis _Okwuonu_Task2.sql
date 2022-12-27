@@ -11,22 +11,22 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema school
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema 001139814
+-- Schema schooldb
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `001139814` ;
+DROP SCHEMA IF EXISTS `schooldb` ;
 
 -- -----------------------------------------------------
--- Schema 001139814
+-- Schema schooldb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `001139814` ;
-USE `001139814` ;
+CREATE SCHEMA IF NOT EXISTS `schooldb` ;
+USE `schooldb` ;
 
 -- -----------------------------------------------------
--- Table `001139814`.`school`
+-- Table `schooldb`.`school`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `001139814`.`school` ;
+DROP TABLE IF EXISTS `schooldb`.`school` ;
 
-CREATE TABLE IF NOT EXISTS `001139814`.`school` (
+CREATE TABLE IF NOT EXISTS `schooldb`.`school` (
   `SchoolName` VARCHAR(10) NOT NULL,
   `SchoolAddress` VARCHAR(90) NULL,
   `SchoolPhone` VARCHAR(30) NULL,
@@ -47,11 +47,11 @@ SELECT * FROM school;
 
 
 -- -----------------------------------------------------
--- Table `001139814`.`teacher`
+-- Table `schooldb`.`teacher`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `001139814`.`teacher` ;
+DROP TABLE IF EXISTS `schooldb`.`teacher` ;
 
-CREATE TABLE IF NOT EXISTS `001139814`.`teacher` (
+CREATE TABLE IF NOT EXISTS `schooldb`.`teacher` (
   `TeacherID` INT NOT NULL,
   `TeacherFirstName` VARCHAR(20) NULL,
   `TeacherMiddleName` VARCHAR(5) NULL,
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `001139814`.`teacher` (
   INDEX `fk_teacher_school_idx` (`school_SchoolName` ASC) VISIBLE,
   CONSTRAINT `fk_teacher_school`
     FOREIGN KEY (`school_SchoolName`)
-    REFERENCES `001139814`.`school` (`SchoolName`)
+    REFERENCES `schooldb`.`school` (`SchoolName`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -85,11 +85,11 @@ SELECT * FROM teacher;
 
 
 -- -----------------------------------------------------
--- Table `001139814`.`student`
+-- Table `schooldb`.`student`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `001139814`.`student` ;
+DROP TABLE IF EXISTS `schooldb`.`student` ;
 
-CREATE TABLE IF NOT EXISTS `001139814`.`student` (
+CREATE TABLE IF NOT EXISTS `schooldb`.`student` (
   `StudentID` INT NOT NULL,
   `StudentFirstName` VARCHAR(20) NULL,
   `StudentMiddleName` VARCHAR(5) NULL,
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `001139814`.`student` (
   INDEX `fk_student_school1_idx` (`school_SchoolName` ASC) VISIBLE,
   CONSTRAINT `fk_student_school1`
     FOREIGN KEY (`school_SchoolName`)
-    REFERENCES `001139814`.`school` (`SchoolName`)
+    REFERENCES `schooldb`.`school` (`SchoolName`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -114,7 +114,7 @@ ENGINE = InnoDB;
 -- ------------------------------------------------------------
 INSERT INTO student (StudentID, StudentFirstName, StudentMiddleName, StudentLastName, StudentPhoneNumber,
 StudentAddress, StudentEmail, StudentNationality, DateOfBirth, Gender, school_SchoolName)
-VALUES (11398140, 'Dennis', 'U', 'Okwuonu', '0458239945', '17 Angove Drive,Blakeview SA 5114', 'dennis.Okwuonu@student.tafesa.edu.au', 'Nigerian' ,'1979-02-06','Male','TafeSa_Ade'),
+VALUES (11398156, 'Denny', 'J', 'okwu', '0458239846', '7 Drive,Blakeview SA 5114', 'os@student.tafesa.edu.au', 'Australian' ,'1983-04-03','Male','TafeSa_Ade'),
 (11002233, 'Matthew', 'A', 'Ude', '0458238834', '7 Wolsten Drive,Blakeview SA 5114', 'matthew.ude@student.tafesa.edu.au', 'Australian' ,'1990-12-15','Male','TafeSa_Ade'),
 (11002234, 'Jess', 'A', 'Johnson', '0423994562', '6 Britton Street,Richmond SA 5009','jess.jonson@student.tafesa.edu.au', 'Indian' ,'1980-02-10','Female','TafeSa_Ade'),
 (11002235, 'Daniel', 'I', 'Harrison', '0468020001','28 Hotchkiss Crescent,Cyodon SA 5008', 'daniel.harrison@student.tafesa.edu.au', 'American' ,'1995-12-25','Male','TafeSa_Ade'),
@@ -127,11 +127,11 @@ SELECT * FROM student;
 
 
 -- -----------------------------------------------------
--- Table `001139814`.`subject`
+-- Table `schooldb`.`subject`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `001139814`.`subject` ;
+DROP TABLE IF EXISTS `schooldb`.`subject` ;
 
-CREATE TABLE IF NOT EXISTS `001139814`.`subject` (
+CREATE TABLE IF NOT EXISTS `schooldb`.`subject` (
   `SubjectName` VARCHAR(10) NOT NULL,
   `SubjectDecription` VARCHAR(200) NULL,
   `SubjectCost` DECIMAL(8,4) NULL,
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `001139814`.`subject` (
   INDEX `fk_subject_teacher1_idx` (`teacher_TeacherID` ASC) VISIBLE,
   CONSTRAINT `fk_subject_teacher1`
     FOREIGN KEY (`teacher_TeacherID`)
-    REFERENCES `001139814`.`teacher` (`TeacherID`)
+    REFERENCES `schooldb`.`teacher` (`TeacherID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -163,11 +163,11 @@ SELECT * FROM subject;
 
 
 -- -----------------------------------------------------
--- Table `001139814`.`studentsubjectenrollement`
+-- Table `schooldb`.`studentsubjectenrollement`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `001139814`.`studentsubjectenrollement` ;
+DROP TABLE IF EXISTS `schooldb`.`studentsubjectenrollement` ;
 
-CREATE TABLE IF NOT EXISTS `001139814`.`studentsubjectenrollement` (
+CREATE TABLE IF NOT EXISTS `schooldb`.`studentsubjectenrollement` (
   `EnrollementDate` DATE NULL,
   `Grade` VARCHAR(4) NULL,
   `Result` INT NULL,
@@ -178,12 +178,12 @@ CREATE TABLE IF NOT EXISTS `001139814`.`studentsubjectenrollement` (
   INDEX `fk_studentsubjectenrollement_student1_idx` (`student_StudentID` ASC) VISIBLE,
   CONSTRAINT `fk_studentsubjectenrollement_subject1`
     FOREIGN KEY (`subject_SubjectName`)
-    REFERENCES `001139814`.`subject` (`SubjectName`)
+    REFERENCES `schooldb`.`subject` (`SubjectName`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_studentsubjectenrollement_student1`
     FOREIGN KEY (`student_StudentID`)
-    REFERENCES `001139814`.`student` (`StudentID`)
+    REFERENCES `schooldb`.`student` (`StudentID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -274,7 +274,7 @@ E.Grade
 FROM student AS St
 INNER JOIN studentsubjectenrollement AS E 
 ON St.StudentID = E.student_StudentID
-INNER JOIN `001139814`.subject AS Su
+INNER JOIN `schooldb`.subject AS Su
 ON E.subject_SubjectName = Su.SubjectName
 WHERE St.StudentFirstName = 'Dennis';
 
@@ -288,7 +288,7 @@ E.Grade
 FROM student AS St
 INNER JOIN studentsubjectenrollement AS E 
 ON St.StudentID = E.student_StudentID
-INNER JOIN `001139814`.subject AS Su
+INNER JOIN `schooldb`.subject AS Su
 ON E.subject_SubjectName = Su.SubjectName
 WHERE St.StudentFirstName = 'Matthew';
 
